@@ -1,9 +1,9 @@
-import Person as human
+import Person as patient
 import ClinicTime
 
 def main():
     print("Testing")
-    p = human.Person('Ben Espiritu', 19, '09195494610', 'Tondo')
+    p = patient.Person('Ben Espiritu', 19, '09195494610', 'Tondo')
     
     print(p.name, p.age, p.contact_num, p.address)
     print(p)
