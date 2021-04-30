@@ -44,9 +44,7 @@ class Person():
         self._address = address
 
 
-p = Person('Ben Espiritu', 19, '09195494610', 'Tondo')
-print(p.name, p.age, p.contact_num, p.address)
-print(p)
+
 
 
 class ClinicTime():
@@ -55,3 +53,16 @@ class ClinicTime():
     taken_time = dict()
 
     def __init__(self):
+
+
+def main():
+    print("Testing")
+    p = Person('Ben Espiritu', 19, '09195494610', 'Tondo')
+    
+    print(p.name, p.age, p.contact_num, p.address)
+    print(p)
+
+
+if __name__ == "__main__":
+    main()
+
