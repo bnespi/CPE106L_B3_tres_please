@@ -52,6 +52,7 @@ class ClinicTime():
     available_time = list()
     taken_time = dict()
     def __init__(self):
+        pass
 
 def main():
     print("Testing")
