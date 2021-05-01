@@ -1,5 +1,6 @@
 import Person as patient
 import ClinicTime
+import Time
 
 def main():
     print("Testing")
