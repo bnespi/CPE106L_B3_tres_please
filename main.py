@@ -3,12 +3,6 @@ import ClinicTime
 import Time
 
 def main():
-    print("Testing")
-    p = patient.Person('Ben Espiritu', 19, '09195494610', 'Tondo')
-    
-    print(p.name, p.age, p.contact_num, p.address)
-    print(p)
-
     ''' While the app operator does not input "quit" criteria, continue asking for 
     every patient's information. This would mean that for every patient, 
     a new Person object will be instantiated. '''
@@ -28,6 +22,8 @@ def main():
 
         client = patient.Person(name, age, contactNum, address)
         # other processes
+
+        
 
         print("\nWhat do you want to do next?")
         print("1: Appoint a checkup appoint for another patient.")
