@@ -22,6 +22,9 @@ def main():
 
         client = patient.Person(name, age, contactNum, address)
         # other processes
+        print("\nWhen do you want to set appointment?")
+        userDate = input("Preferred Date: ")
+        userTime = input("Preferred Time: ")
 
         
 
