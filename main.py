@@ -1,57 +1,37 @@
+import Person as patient
+import ClinicTime
+import Time
 
+def main():
+    ''' While the app operator does not input "quit" criteria, continue asking for 
+    every patient's information. This would mean that for every patient, 
+    a new Person object will be instantiated. '''
+    print("Good Day!\n")
+    
+    print("What do you want to do today?")
+    print("1: Appoint a checkup appointment for a new patient.")
+    print("2: Exit.")
+    userInput = int(input("Choice: "))
 
-class Person():
+    while (userInput != 2):
+        print("\nPlease enter your details below: \n")
+        name = input("Name: ")
+        age = int(input("Age: "))
+        contactNum = input("Contact Number: ")
+        address = input("Address: ")
 
-    def __init__(self, name = ' ', age = ' ',contact_num = ' ',address = ' '):
-        self.name = name
-        self.age = age
-        self.contact_num = contact_num
-        self.address = address
+        client = patient.Person(name, age, contactNum, address)
+        # other processes
+        print("\nWhen do you want to set appointment?")
+        userDate = input("Preferred Date: ")
+        userTime = input("Preferred Time: ")
 
-    def __str__(self):
-        return self.name + '\n' + str(self.age)  + '\n' + self.contact_num + '\n'
+        
 
-    @property
-    def name(self):
-        return self._name
+        print("\nWhat do you want to do next?")
+        print("1: Appoint a checkup appoint for another patient.")
+        print("2: Exit.")
+        userInput = int(input("Choice: "))
 
-    @name.setter
-    def name(self, name):
-        self._name = name
-
-    @property
-    def age(self):
-        return self._age
-
-    @age.setter
-    def age(self, age):
-        self._age = age
-
-    @property
-    def contact_num(self):
-        return self._contact_num
-
-    @contact_num.setter
-    def contact_num(self, contact_num):
-        self._contact_num = contact_num
-
-    @property
-    def address(self):
-        return self._address
-
-    @address.setter
-    def address(self, address):
-        self._address = address
-
-
-p = Person('Ben Espiritu', 19, '09195494610', 'Tondo')
-print(p.name, p.age, p.contact_num, p.address)
-print(p)
-
-
-class ClinicTime():
-    office_hours = list()
-    available_time = list()
-    taken_time = dict()
-
-    def __init__(self):
+if __name__ == "__main__":
+    main()
