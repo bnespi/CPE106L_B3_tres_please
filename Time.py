@@ -1,7 +1,7 @@
 import time
 import datetime
 
-class Time():
+class Time:
     def __init__(self):
         pass
     

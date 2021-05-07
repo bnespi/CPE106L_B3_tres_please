@@ -1,10 +1,11 @@
-class Person():
+class Person:
 
     def __init__(self, name = ' ', age = ' ',contact_num = ' ',address = ' '):
         self.name = name
         self.age = age
         self.contact_num = contact_num
         self.address = address
+        self.sched = None
 
     def __str__(self):
         return self.name + '\n' + str(self.age)  + '\n' + self.contact_num + '\n'
