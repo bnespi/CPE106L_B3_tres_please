@@ -26,6 +26,3 @@ class Time:
         conn.commit()
         return curr.lastrowid
     
-
-# conn = sqlite3.connect('clients.db') # to establish connection to the database
-# curr = conn.cursor()

@@ -12,7 +12,6 @@ def main():
     
     # variables
     ticket = 0
-    # conn = sqlite3.connect('clients.db')
 
     print("Good Day!\n")
     
@@ -30,7 +29,7 @@ def main():
 
         client = Person(name, age, contactNum, address)
         ticket += 1
-        # other processes
+        
         print("\nWhen do you want to set appointment?")
         userDate = input("Preferred Date: ") # to get user's preferred date
         userTime = input("Preferred Time: ") # to get user's preferred time
@@ -42,8 +41,7 @@ def main():
         newClientSlot = timee.Time()
         conn = newClientSlot.initializeDB('clients.db')
         newClientSlot.addData(conn, clientTuple)
-        # newClientSlot.curr.execute('''INSERT INTO 'reservedClients' ('ID', 'Name', 'Age', 'Contact Number', 'Address', 'Reserved Date and Time') VALUES (?, ?, ?, ?, ?, ?);, clientTuple''')
-        # newClientSlot.conn.commit()
+        
         
         
 
