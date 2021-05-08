@@ -1,7 +1,7 @@
-import Person as patient
+from Person import Person
 import ClinicTime
 import Time
-import Schedule
+from Schedule import Schedule
 
 def main():
     ''' While the app operator does not input "quit" criteria, continue asking for 
@@ -21,7 +21,7 @@ def main():
         contactNum = input("Contact Number: ")
         address = input("Address: ")
 
-        client = patient.Person(name, age, contactNum, address)
+        client = Person(name, age, contactNum, address)
         # other processes
         print("\nWhen do you want to set appointment?")
         userDate = input("Preferred Date: ") # to get individual month and day
@@ -32,7 +32,7 @@ def main():
         minute = int(input("Enter minute: "))
         client.sched = Schedule.Schedule(month, day, hour, minute)
         print(client.sched)'''
-        client.sched = Schedule.Schedule(userDate, userTime)
+        client.sched = Schedule(userDate, userTime)
         print(client.sched)
         
 
