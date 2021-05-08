@@ -1,12 +1,19 @@
 from Person import Person
 import ClinicTime
-import Time
+import Time as timee
 from Schedule import Schedule
+import sqlite3
+import datetime
 
 def main():
     ''' While the app operator does not input "quit" criteria, continue asking for 
     every patient's information. This would mean that for every patient, 
     a new Person object will be instantiated. '''
+    
+    # variables
+    ticket = 0
+    # conn = sqlite3.connect('clients.db')
+
     print("Good Day!\n")
     
     print("What do you want to do today?")
@@ -22,18 +29,22 @@ def main():
         address = input("Address: ")
 
         client = Person(name, age, contactNum, address)
+        ticket += 1
         # other processes
         print("\nWhen do you want to set appointment?")
-        userDate = input("Preferred Date: ") # to get individual month and day
-        userTime = input("Preferred Time: ") # to get individual hour and minute
-        '''month = int(input("Enter month: "))
-        day = int(input("Enter day: "))
-        hour = int(input("Enter hour: "))
-        minute = int(input("Enter minute: "))
-        client.sched = Schedule.Schedule(month, day, hour, minute)
-        print(client.sched)'''
+        userDate = input("Preferred Date: ") # to get user's preferred date
+        userTime = input("Preferred Time: ") # to get user's preferred time
         client.sched = Schedule(userDate, userTime)
         print(client.sched)
+        print(client.sched.wholeDateTime)
+        
+        clientTuple = (ticket, name, age, contactNum, address, datetime.datetime.strptime(userDate + " 2021 " + userTime, "%B %d %Y %I:%M %p"))
+        newClientSlot = timee.Time()
+        conn = newClientSlot.initializeDB('clients.db')
+        newClientSlot.addData(conn, clientTuple)
+        # newClientSlot.curr.execute('''INSERT INTO 'reservedClients' ('ID', 'Name', 'Age', 'Contact Number', 'Address', 'Reserved Date and Time') VALUES (?, ?, ?, ?, ?, ?);, clientTuple''')
+        # newClientSlot.conn.commit()
+        
         
 
         print("\nWhat do you want to do next?")
