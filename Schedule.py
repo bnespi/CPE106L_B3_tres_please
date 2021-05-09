@@ -1,15 +1,6 @@
 import datetime
 import calendar
-'''
-class Schedule:
-    def __init__(self, month, day, hour, minute):
-        self.dateSched = datetime.date(2021, month, day)
-        self.timeSched = datetime.time(hour, minute, 0)
 
-    def __str__(self):
-        return 'The scheduled date is {self.dateSched.month} at {self.timeSched}'.format(self=self)
-
-'''
 class Schedule:
     def __init__(self, userDate, userTime):
         self.dateSched = datetime.datetime.strptime(userDate + " 2021", "%B %d %Y")

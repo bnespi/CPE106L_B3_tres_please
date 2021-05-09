@@ -3,7 +3,6 @@ import ClinicTime
 import Time as timee
 from Schedule import Schedule
 import sqlite3
-import datetime
 
 def main():
     ''' While the app operator does not input "quit" criteria, continue asking for 
@@ -16,7 +15,7 @@ def main():
     print("Good Day!\n")
     
     print("What do you want to do today?")
-    print("1: Appoint a checkup appointment for a new patient.")
+    print("1: Schedule a checkup appointment for a new patient.")
     print("2: Exit.")
     userInput = int(input("Choice: "))
 
@@ -53,7 +52,7 @@ def main():
         
         # prompt for next action to do, exit program if "quit" criterias was satisfied
         print("\nWhat do you want to do next?")
-        print("1: Appoint a checkup appointment for another patient.")
+        print("1: Schedule a checkup appointment for another patient.")
         print("2: Exit.")
         userInput = int(input("Choice: "))
 
