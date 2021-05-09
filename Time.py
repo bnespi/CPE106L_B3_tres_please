@@ -1,9 +1,20 @@
+# FOR SQLITE DATABASE
+
 import time
 import datetime
+import sqlite3
 
-class Time():
+
+class Time:
     def __init__(self):
         pass
     
+    def initializeDB(self, fileName):
+        return sqlite3.connect(fileName)
 
-    # print(datetime.date(2020,7,24).strftime('%A')) #  to get weekday
+    def addData(self, conn, tupleData):
+        curr = conn.cursor()
+        curr.execute('''INSERT OR REPLACE INTO reservedClients ('Name', 'Age', 'Contact Number', 'Address', 'Date and Time') VALUES (?, ?, ?, ?, ?)''', tupleData)
+        conn.commit()
+        return curr.lastrowid
+    
