@@ -1,5 +1,22 @@
-# CPE106L_B3_tres_please Machine Problem
+# Consultation Scheduler
 Group tres please code source for Software Design Laboratory Project.
+
+# Project Description
+
+  The project "Consultation Scheduler" is viewed to be implemented for clinics. It aims to create a no-contact transaction on patient scheduling. The patient only needs to show their qr code so that he/she won't need to write on any forms anymore. This reduces the contact needed to relay information. 
+
+
+# Features:
+  - will use the PyQt GUI toolkit to implement the GUI of our software project
+  - most establishments nowadays require people to write on a piece of paper their information. 
+    With this scheduler, a person only needs to hold on their qr code to have those information on the fly.
+  - a specific qr code will be created when the patient has chosen a specific time for his/her appointment
+     the info on this qr code will be:
+        Name
+        Age
+        Contact Number
+        Address
+        Date and Time of Consultation
 
 
 ## Installation
