@@ -37,7 +37,7 @@ def main():
         print(client.sched)
         print(client.sched.wholeDateTime)
         
-        clientTuple = (ticket, name, age, contactNum, address, datetime.datetime.strptime(userDate + " 2021 " + userTime, "%B %d %Y %I:%M %p"))
+        clientTuple = (ticket, name, age, contactNum, address, client.sched.wholeDateTime)
         newClientSlot = timee.Time()
         conn = newClientSlot.initializeDB('clients.db')
         newClientSlot.addData(conn, clientTuple)
