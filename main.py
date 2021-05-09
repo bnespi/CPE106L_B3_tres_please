@@ -36,13 +36,13 @@ def main():
         
         
         # process of inserting time slot into database (once confirmed to be available)
+        client.sched = Schedule(userDate, userTime)
         clientTuple = (name, age, contactNum, address, client.sched.wholeDateTime)
         newClientSlot = timee.Time() # new instance of Time class to be inserted into database
         conn = newClientSlot.initializeDB('clients.db')
         newClientSlot.addData(conn, clientTuple)
 
         # confirmation of time slot reservation
-        client.sched = Schedule(userDate, userTime)
         print(client.sched)
 
         # generation of the qr code block should come in here
