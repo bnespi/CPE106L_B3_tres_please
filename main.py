@@ -11,7 +11,7 @@ def main():
     a new Person object will be instantiated. '''
     
     # variables
-    ticket = 0
+    
 
     print("Good Day!\n")
     
@@ -28,7 +28,7 @@ def main():
         address = input("Address: ")
 
         client = Person(name, age, contactNum, address)
-        ticket += 1
+        
         
         print("\nWhen do you want to set appointment?")
         userDate = input("Preferred Date: ") # to get user's preferred date
@@ -37,7 +37,7 @@ def main():
         print(client.sched)
         print(client.sched.wholeDateTime)
         
-        clientTuple = (ticket, name, age, contactNum, address, client.sched.wholeDateTime)
+        clientTuple = (name, age, contactNum, address, client.sched.wholeDateTime)
         newClientSlot = timee.Time()
         conn = newClientSlot.initializeDB('clients.db')
         newClientSlot.addData(conn, clientTuple)

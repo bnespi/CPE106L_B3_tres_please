@@ -14,7 +14,7 @@ class Time:
 
     def addData(self, conn, tupleData):
         curr = conn.cursor()
-        curr.execute('''INSERT OR REPLACE INTO reservedClients ('ID', 'Name', 'Age', 'Contact Number', 'Address', 'Date and Time') VALUES (?, ?, ?, ?, ?, ?)''', tupleData)
+        curr.execute('''INSERT OR REPLACE INTO reservedClients ('Name', 'Age', 'Contact Number', 'Address', 'Date and Time') VALUES (?, ?, ?, ?, ?)''', tupleData)
         conn.commit()
         return curr.lastrowid
     
