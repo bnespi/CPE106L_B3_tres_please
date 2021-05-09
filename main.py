@@ -46,7 +46,7 @@ def main():
         
 
         print("\nWhat do you want to do next?")
-        print("1: Appoint a checkup appoint for another patient.")
+        print("1: Appoint a checkup appointment for another patient.")
         print("2: Exit.")
         userInput = int(input("Choice: "))
 
