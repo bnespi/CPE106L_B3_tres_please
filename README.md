@@ -19,3 +19,8 @@ pip install qrcode[pil]
 pip install opencv-python
 ```
 5. Run the program.
+
+## Developers
+1. Carcellar, Mon Timothy Isaac M.
+2. Espiritu, Joseph Benedict B.
+3. Ugale, Rionne Angelo
