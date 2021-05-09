@@ -3,6 +3,7 @@
 import time
 import datetime
 import sqlite3
+import os
 
 
 class Time:
@@ -10,11 +11,15 @@ class Time:
         pass
     
     def initializeDB(self, fileName):
-        return sqlite3.connect(fileName)
+        return sqlite3.connect(os.getcwd()+'\\CPE106L_B3_tres_please\\'+fileName)
 
     def addData(self, conn, tupleData):
         curr = conn.cursor()
-        curr.execute('''INSERT OR REPLACE INTO reservedClients ('Name', 'Age', 'Contact Number', 'Address', 'Date and Time') VALUES (?, ?, ?, ?, ?)''', tupleData)
+        curr.execute('''
+            INSERT OR REPLACE INTO 
+            reservedClients ('Name', 'Age', 'Contact Number', 'Address', 'Date and Time') 
+            VALUES (?, ?, ?, ?, ?)
+                    ''', tupleData)
         conn.commit()
         return curr.lastrowid
     
