@@ -10,7 +10,7 @@ class Schedule:
         self.inDay = self.dateSched.strftime("%d")
         self.dayName = calendar.day_name[self.dateSched.weekday()]
         self.inTime = self.timeSched.strftime("%H:%M")
+        self.inTimeMin = self.timeSched.strftime("%M")
 
     def __str__(self):
-        #return 'The scheduled date is on {self.month} {self.day}, {self.dayName} at {self.timeSched}'.format(self = self)
         return 'The scheduled date is on {self.inMonth} {self.inDay}, {self.dayName}, at {self.inTime}'.format(self = self)

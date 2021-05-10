@@ -1,6 +1,26 @@
 # Consultation Scheduler
 Group tres please code source for Software Design Laboratory Project.
 
+<!---
+Program sequence:
+	Asks the user what to do
+		if (make schedule)
+			ask for name, age, contact, and address
+			ask for preferred date and time
+			check whether date and time is available
+			if (available)
+				confirm schedule
+				generate qr code
+			else
+				input date and time again
+			ask the user what to do next
+		else if (decode qr code)
+			input image
+			decode
+		else
+			exit
+--->
+
 ## Project Description
 
   The project "Consultation Scheduler" is viewed to be implemented for clinics. It aims to create a no-contact transaction on patient scheduling. The patient only needs to show their qr code so that he/she won't need to write on any forms anymore. This reduces the contact needed to relay information. 
