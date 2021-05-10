@@ -17,7 +17,7 @@ class Time:
         curr = conn.cursor()
         curr.execute('''
             INSERT OR REPLACE INTO 
-            reservedClients ('Name', 'Age', 'Contact Number', 'Address', 'Date and Time') 
+            reservedClients ('Name', 'Age', 'Contact Number', 'Address', 'DateandTime') 
             VALUES (?, ?, ?, ?, ?)
                     ''', tupleData)
         conn.commit()

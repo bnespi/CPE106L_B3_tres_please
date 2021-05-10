@@ -1,5 +1,6 @@
 from Person import Person
 from pyzbar.pyzbar import decode #for decoding qrcode
+from datetime import datetime
 import qrcode as qr
 import cv2 as cv
 import numpy as np
@@ -27,6 +28,7 @@ def main():
 
     while userInput != 3:
         if userInput == 1:
+           
             print("\nPlease enter your details below: \n")
             name = input("Name: ")
             age = int(input("Age: "))
@@ -34,20 +36,61 @@ def main():
             address = input("Address: ")
 
             client = Person(name, age, contactNum, address) # new instance of Person object
-
+        
 
             print("\nWhen do you want to set appointment?")
             userDate = input("Preferred Date: ") # to get user's preferred date
             userTime = input("Preferred Time: ") # to get user's preferred time
             # comparison code block should come in here
-
-
-            # process of inserting time slot into database (once confirmed to be available)
+            
+        
+            # processt of inserting time slot into database (once confirmed o be available)
             client.sched = Schedule(userDate, userTime)
+
+           
+
             clientTuple = (name, age, contactNum, address, client.sched.wholeDateTime)
+            
+            clientSchedule = (client.sched.wholeDateTime)
             newClientSlot = timee.Time() # new instance of Time class to be inserted into database
+            
             conn = newClientSlot.initializeDB('clients.db')
-            x = newClientSlot.addData(conn, clientTuple)
+            
+
+            # Getting the Date and Time data from the SQLite Database
+            cur = conn.cursor()
+            cur.execute("SELECT DateandTime FROM reservedClients")
+            results = cur.fetchall()
+            #Converting the SQLite database into a list since it was in a tuple from SQLite
+            convertData=[(i[0]) for i in results]
+           
+            # Converting the user input which was a date.time object into a str type variable 
+            time = clientSchedule
+            year = time.strftime("%Y")
+            month = time.strftime("%m")
+            day = time.strftime("%d")
+            time = time.strftime("%H:%M:%S")
+
+            date_time = year + "-" + month + "-" + day + " " + time
+           
+            # Checking if the chosen timeslot of the user is already taken 
+            x = 0
+            found = False
+            for each_value in convertData:
+                
+                if convertData[x] == date_time:
+                    found = True
+                    break
+                x = x + 1
+           
+
+
+            cur.close()
+
+
+            #if the chosen schedule is not in the data base
+            if found == False:
+                x = newClientSlot.addData(conn, clientTuple)
             #confirm schedule here
 
 
@@ -57,9 +100,13 @@ def main():
             # generation of the qr code block should come in here
             # https://betterprogramming.pub/how-to-generate-and-decode-qr-codes-in-python-a933bce56fd0
             # link above might help us for this
-            client_qr = qr.make(client.name+'\n'+str(client.sched.wholeDateTime))
-            client_qr.save(os.getcwd()+'\\client_qr\\'+client.name+str(x)+'.jpg')
+                client_qr = qr.make(client.name+'\n'+str(client.sched.wholeDateTime))
+                client_qr.save(os.getcwd()+'\\client_qr\\'+client.name+str(x)+'.jpg')
 
+            #if the chosen schedule is in the database
+            else:
+                print("The timeslot you have selected is already taken")
+            
 
         #variable scanned_data is essential in this part
         #scanned_data holds the name and the wholeDateTime
