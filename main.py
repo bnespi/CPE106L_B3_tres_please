@@ -44,9 +44,8 @@ def main():
             client.sched = Schedule(userDate, userTime)
 
            
-
-            clientTuple = (name, age, contactNum, address, client.sched.wholeDateTime)
             clientSchedule = (client.sched.wholeDateTime)
+            clientTuple = (name, age, contactNum, address, clientSchedule)
             newClientSlot = timee.Time() # new instance of Time class to be inserted into database
             conn = newClientSlot.initializeDB('clients.db') # create connection to sqlite3 database
             
@@ -56,8 +55,8 @@ def main():
             curr.execute("SELECT DateandTime FROM reservedClients")
             results = curr.fetchall()
 
-            #Converting the SQLite database into a list since it was in a tuple from SQLite
-            convertData=[(i[0]) for i in results]
+            # Converting the SQLite database into a list since it was in a tuple from SQLite
+            convertData = [(i[0]) for i in results]
            
             # Converting the user input which was a date.time object into a str type variable 
             time = clientSchedule
@@ -67,6 +66,9 @@ def main():
             time = time.strftime("%H:%M:%S")
 
             date_time = year + "-" + month + "-" + day + " " + time
+
+            # only every hour algorithm
+            
            
             # Checking if the chosen timeslot of the user is already taken 
             x = 0
@@ -79,14 +81,14 @@ def main():
             curr.close()
 
 
-            #if the chosen schedule is not in the data base
+            # if the chosen schedule is not in the data base
             if found == False:
                 x = newClientSlot.addData(conn, clientTuple)
 
                 # confirmation of time slot reservation
                 print("Success! The summary of your appointment is found below.")
                 print(client.sched)
-                #print(client.name+'\n'+str(client.sched.wholeDateTime))
+                # print(client.name+'\n'+str(client.sched.wholeDateTime))
 
                 # generation of the qr code block should come in here
                 client_qr = qr.make(client.name+'\n'+str(client.sched.wholeDateTime))
