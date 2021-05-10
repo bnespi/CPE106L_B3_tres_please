@@ -9,7 +9,3 @@ class ClinicTime:
     taken_time = dict()
     def __init__(self):
         pass
-
-    # suggestions
-    # def listAvailableTimes()
-    # def testSchedule(month, day, hour, minute)

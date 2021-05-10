@@ -3,8 +3,6 @@
 import time
 import datetime
 import sqlite3
-import os
-
 
 class Time:
     def __init__(self):
