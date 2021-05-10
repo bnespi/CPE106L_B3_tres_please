@@ -11,7 +11,7 @@ class Time:
         pass
     
     def initializeDB(self, fileName):
-        return sqlite3.connect(os.getcwd()+'\\CPE106L_B3_tres_please\\'+fileName)
+        return sqlite3.connect(fileName)
 
     def addData(self, conn, tupleData):
         curr = conn.cursor()

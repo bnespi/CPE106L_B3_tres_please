@@ -58,7 +58,7 @@ def main():
             # https://betterprogramming.pub/how-to-generate-and-decode-qr-codes-in-python-a933bce56fd0
             # link above might help us for this
             client_qr = qr.make(client.name+'\n'+str(client.sched.wholeDateTime))
-            client_qr.save(os.getcwd()+'\\CPE106L_B3_tres_please\\client_qr\\'+client.name+str(x)+'.jpg')
+            client_qr.save(os.getcwd()+'\\client_qr\\'+client.name+str(x)+'.jpg')
 
 
         #variable scanned_data is essential in this part
