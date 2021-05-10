@@ -68,7 +68,9 @@ def main():
             date_time = year + "-" + month + "-" + day + " " + time
 
             # only every hour algorithm
-            
+            if (client.sched.inTimeMin) != "00":
+                print("Sorry but we only accept hourly reservations, i.e. 8:00 am")
+                continue
            
             # Checking if the chosen timeslot of the user is already taken 
             x = 0
