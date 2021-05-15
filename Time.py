@@ -20,4 +20,8 @@ class Time:
                     ''', tupleData)
         conn.commit()
         return curr.lastrowid
+
+    def exists(self, conn, param):
+
+        return False
     
