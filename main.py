@@ -117,9 +117,16 @@ def main():
         # variable scanned_data is essential in this part
         # scanned_data holds the name and the wholeDateTime
         elif userInput == 2:
+
+            #setup for vision
             cap = cv.VideoCapture(0)  # VideoCapture(arg) where arg states which camera to use
             cap.set(3, 1080)  # 3 - width
             cap.set(3, 720)  # 4 - height
+
+            #setup for database checking
+            checkClientSlot = timee.Time()  # new instance of Time class to be inserted into database
+            conn = checkClientSlot.initializeDB('clients.db')  # create connection to sqlite3 database
+            curr = conn.cursor()
 
             while True:
                 success, image = cap.read()
@@ -130,26 +137,37 @@ def main():
                 for barcode in decode(image):
                     if barcode != []:
                         scanned_data = barcode.data.decode('utf-8')
-                        print(scanned_data)
-                        pts = np.array([barcode.polygon], np.int32)
-                        pts = pts.reshape((-1, 1, 2))
-                        cv.polylines(image, [pts], True, (0, 255, 0), 5)
-                        enclosure = barcode.rect
-                        cv.putText(image, scanned_data[6:scanned_data.find('\n')],
-                                   (enclosure[2], enclosure[1]),
-                                    cv.FONT_ITALIC, 0.3,
-                                    (255, 0, 0), 1)
-                    decoded = barcode
+                        name = scanned_data[0:scanned_data.find('\n')]
+                        date_and_time = scanned_data[scanned_data.find('\n')+1:]
 
+                        command = "SELECT Name,DateandTime FROM reservedClients WHERE Name = ? AND DateandTime = ?"
+                        curr.execute(command, (name, date_and_time))
+                        from_db = curr.fetchall()
+
+                        if (name, date_and_time) in from_db:
+                            pts = np.array([barcode.polygon], np.int32)
+                            pts = pts.reshape((-1, 1, 2))
+                            cv.polylines(image, [pts], True, (0, 255, 0), 5)
+                            enclosure = barcode.rect
+                            cv.putText(image, name,
+                                       (enclosure[2], enclosure[1]),
+                                        cv.FONT_ITALIC, 0.3,
+                                        (255, 0, 0), 1)
+                        else:
+                            pts = np.array([barcode.polygon], np.int32)
+                            pts = pts.reshape((-1, 1, 2))
+                            cv.polylines(image, [pts], True, (0, 0, 255), 5)
+                            enclosure = barcode.rect
 
                 cv.imshow('QR Scanner', image)
                 cv.waitKey(1)
                 if decoded != None:
                     cv.destroyWindow('QR Scanner')
                     break
-                # if arg is 0 or -1 then the program runs eternally
-                # if arg is 1 then it waits for a click
-                
+
+
+
+
         # prompt for next action to do, exit program if "quit" criterias was satisfied
         print("\nWhat do you want to do next?")
         userInput = prompt()
