@@ -1,14 +1,33 @@
 from Person import Person
 from pyzbar.pyzbar import decode #for decoding qrcode
-from datetime import datetime
 import qrcode as qr
 import cv2 as cv
 import numpy as np
-import ClinicTime
 import Time as timee
 from Schedule import Schedule
-import sqlite3
 import os
+
+
+def prompt():
+    print("1: Schedule a checkup appointment for a new patient.")
+    print('2: Scan your schedule qr')
+    print("3: Exit.")
+    uInput = int(input("Choice: "))
+    return uInput
+
+
+def prompt_details():
+    print("\nPlease enter your details below: \n")
+    name = input("Name: ")
+    age = int(input("Age: "))
+    contactNum = input("Contact Number: ")
+    address = input("Address: ")
+    return (name, age, contactNum, address)
+
+
+
+def convert_to_str(t):
+    return (t.strftime("%Y"), t.strftime("%m"), t.strftime("%d"), t.strftime("%H:%M:%S"))
 
 
 def main():
@@ -17,38 +36,43 @@ def main():
     a new Person object will be instantiated. '''
 
     print("\tWelcome to Consultation Scheduler\n")
-    
+    userInput = prompt()
+
     print("What do you want to do today?")
-    print("1: Schedule a checkup appointment for a new patient.")
-    print('2: Scan your schedule qr')
-    print("3: Exit.")
-    userInput = int(input("Choice: "))
 
     while userInput != 3:
         if userInput == 1: # creates new appointment schedule
-            print("\nPlease enter your details below: \n")
-            name = input("Name: ")
-            age = int(input("Age: "))
-            contactNum = input("Contact Number: ")
-            address = input("Address: ")
+            name, age, contactNum, address = prompt_details()
 
             client = Person(name, age, contactNum, address) # new instance of Person object
 
-            print("\nWhen do you want to set appointment?")
-            userDate = input("Preferred Date: ") # to get user's preferred date
-            userTime = input("Preferred Time: ") # to get user's preferred time
-            # comparison code block should come in here
-            
-        
+            print("\nWhen do you want to set appointment?\nOffice Hours: 9AM-5PM, Monday to Friday")
+            # in a while loop because the appointment date must be in HH:00 format
+            while True:
+                userDate = input("Preferred Date (Month Name/Day): ") # to get user's preferred date
+                userTime = input("Preferred Time (HH:00 AM/PM): ") # to get user's preferred time
+                # comparison code block should come in here
+
+                if 'AM' in userTime:#if scheduled in the morning
+                    # only 9-11AM is allowed
+                    if 11 >= userTime[0:userTime.find(':')] >= 9:
+                        print('Clinic opens at 9AM')
+                        #prompt again
+                elif 'PM' in userTime: #if scheduled in the afternoon
+                    if userTime[0:userTime.find(':')] >= 5:
+                        print('Clinic closes at 5PM')
+                elif userTime[userTime.find(':')+1: userTime.find(' ')] != '00':
+                    print("Sorry but we only accept hourly reservations, i.e. 8:00 am")
+                else:
+                    break
+
             # process of inserting time slot into database (once confirmed to be available)
             client.sched = Schedule(userDate, userTime)
 
-           
             clientSchedule = (client.sched.wholeDateTime)
             clientTuple = (name, age, contactNum, address, clientSchedule)
             newClientSlot = timee.Time() # new instance of Time class to be inserted into database
             conn = newClientSlot.initializeDB('clients.db') # create connection to sqlite3 database
-            
 
             # Getting the Date and Time data from the SQLite Database
             curr = conn.cursor()
@@ -57,31 +81,15 @@ def main():
 
             # Converting the SQLite database into a list since it was in a tuple from SQLite
             convertData = [(i[0]) for i in results]
-           
-            # Converting the user input which was a date.time object into a str type variable 
+
+            # Converting the user input which was a date.time object into a str type variable
             time = clientSchedule
-            year = time.strftime("%Y")
-            month = time.strftime("%m")
-            day = time.strftime("%d")
-            time = time.strftime("%H:%M:%S")
+            year, month, day, time = convert_to_str(time)
 
             date_time = year + "-" + month + "-" + day + " " + time
 
-            # only every hour algorithm
-            if (client.sched.inTimeMin) != "00":
-                print("Sorry but we only accept hourly reservations, i.e. 8:00 am")
-                continue
-           
-            # Checking if the chosen timeslot of the user is already taken 
-            x = 0
-            found = False
-            for each_value in convertData:
-                if convertData[x] == date_time:
-                    found = True
-                    break
-                x = x + 1
+            found = date_time in convertData
             curr.close()
-
 
             # if the chosen schedule is not in the data base
             if found == False:
@@ -91,10 +99,15 @@ def main():
                 print("Success! The summary of your appointment is found below.")
                 print(client.sched)
                 # print(client.name+'\n'+str(client.sched.wholeDateTime))
+                client_qr = qr.make(client.name + '\n' + str(client.sched.wholeDateTime))
+                client_qr.save(os.getcwd() + '\\client_qr\\' + client.name + str(x) + '.jpg')
 
+                qrjpg = cv.imread('client_qr\\' + client.name + str(x) + '.jpg')
+                cv.imshow('Your QR Code', qrjpg)
+                cv.waitKey(1)
+                input()
+                cv.destroyAllWindows()
                 # generation of the qr code block should come in here
-                client_qr = qr.make(client.name+'\n'+str(client.sched.wholeDateTime))
-                client_qr.save(os.getcwd()+'\\client_qr\\'+client.name+str(x)+'.jpg')
 
             # if the chosen schedule is in the database
             else:
@@ -139,10 +152,7 @@ def main():
                 
         # prompt for next action to do, exit program if "quit" criterias was satisfied
         print("\nWhat do you want to do next?")
-        print("1: Schedule a checkup appointment for a new patient.")
-        print('2: Scan your schedule qr')
-        print("3: Exit.")
-        userInput = int(input("Choice: "))
+        userInput = prompt()
     
     print("Thank you for using Consultation Scheduler. Have a great day!")
 
